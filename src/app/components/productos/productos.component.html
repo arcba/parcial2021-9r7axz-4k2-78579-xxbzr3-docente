@@ -1,0 +1,99 @@
+<div class="row mb-4">
+  <label>
+    Cantidad Registros = {{Productos.length}}
+  </label>
+</div>
+<div class="row mb-4">
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="Alta=!Alta"
+    *ngIf="!Alta"
+  >
+    Registrar un Producto
+  </button>
+</div>
+
+<!--Consulta Productos-->
+<div>
+  <div class="row">
+    <table class="table table-hover table-bordered table-striped" *ngIf="!Alta">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>FechaAlta</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prod of Productos">
+          <td>{{prod.Id}}</td>
+          <td>{{prod.Nombre}}</td>
+          <td>{{prod.FechaAlta}}</td>
+          <td>{{prod.Stock}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--Registro Productos-->
+<div class="row">
+  <form [formGroup]="formProductos" *ngIf="Alta">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Id Producto</label>
+      <input type="text" class="form-control" formControlName="Id" />
+      <small
+        class="form-text text-muted"
+        *ngIf="(formProductos.controls.Id.touched || submitted) && (formProductos.controls.Nombre.errors?.pattern)"
+        >No se debe llenar este campo para el Registro</small
+      >
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Nombre Producto</label>
+      <input type="text" class="form-control" formControlName="Nombre" />
+      <small
+        class="form-text text-muted"
+        *ngIf="(formProductos.controls.Id.touched || submitted) && formProductos.controls.Nombre.errors?.required"
+        >Debe escribir un Nombre</small
+      >
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Fecha Alta Producto</label>
+      <input type="text" class="form-control" />
+      <small
+        class="form-text text-muted"
+        *ngIf="(formProductos.controls.Stock.touched || submitted) && (formProductos.controls.Nombre.errors?.required && formProductos.controls.Nombre.errors?.pattern)"
+        >Debe ser en formato AAAA/MM/DD</small
+      >
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Stock</label>
+      <input type="text" class="form-control" formControlName="Stock" />
+      <small
+        class="form-text text-muted"
+        *ngIf="(formProductos.controls.Stock.touched || submitted) && (formProductos.controls.Nombre.errors?.required && formProductos.controls.Nombre.errors?.pattern)"
+        >Solo puede escribir Numeros</small
+      >
+    </div>
+
+    <div class="row mb-4">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="RegistrarProducto()"
+        *ngIf="Alta"
+      >
+        Registrar Producto
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="Alta=false"
+        *ngIf="Alta"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
